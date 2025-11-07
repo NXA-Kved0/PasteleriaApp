@@ -54,7 +54,6 @@ abstract class AppDatabase : RoomDatabase() {
         }
 
         suspend fun populateDatabase(productDao: ProductDao) {
-            // Productos de ejemplo para tu pastelería
             val sampleProducts = listOf(
                 Product(
                     name = "Torta de Chocolate",
@@ -62,7 +61,7 @@ abstract class AppDatabase : RoomDatabase() {
                     price = 15000.0,
                     category = "Tortas",
                     stock = 10,
-                    imageUrl = ""
+                    imageUrl = "https://res.cloudinary.com/riqra/image/upload/v1739382926/sellers/tortas-gaby/products/djenpatwiwbywtrzatej.jpg"
                 ),
                 Product(
                     name = "Cheesecake",
@@ -70,7 +69,7 @@ abstract class AppDatabase : RoomDatabase() {
                     price = 12000.0,
                     category = "Tortas",
                     stock = 8,
-                    imageUrl = ""
+                    imageUrl = "https://www.paulinacocina.net/wp-content/uploads/2025/01/receta-de-cheesecake-1742898428.jpg"
                 ),
                 Product(
                     name = "Cupcakes Variados",
@@ -78,15 +77,15 @@ abstract class AppDatabase : RoomDatabase() {
                     price = 8000.0,
                     category = "Cupcakes",
                     stock = 20,
-                    imageUrl = ""
+                    imageUrl = "https://www.mokacupcakes.com/cdn/shop/products/IMG_8116.jpg?v=1674069616"
                 ),
                 Product(
-                    name = "Torta Tres Leches",
-                    description = "Clásica torta tres leches casera",
+                    name = "Torta Naranja",
+                    description = "Clásica torta de naranja casera",
                     price = 14000.0,
                     category = "Tortas",
                     stock = 5,
-                    imageUrl = ""
+                    imageUrl = "https://hazdeoros.com/familiar/wp-content/uploads/2021/02/torta-casera-de-naranja-con-cubierta-de-chocolate-una-receta-facil-sin-horno.png"
                 ),
                 Product(
                     name = "Alfajores",
@@ -94,7 +93,7 @@ abstract class AppDatabase : RoomDatabase() {
                     price = 6000.0,
                     category = "Galletas",
                     stock = 30,
-                    imageUrl = ""
+                    imageUrl = "https://cdn11.bigcommerce.com/s-3stx4pub31/product_images/uploaded_images/alfajor-negro-relleno-de-dulce-de-leche.jpg"
                 ),
                 Product(
                     name = "Brownies",
@@ -102,7 +101,7 @@ abstract class AppDatabase : RoomDatabase() {
                     price = 5000.0,
                     category = "Postres",
                     stock = 15,
-                    imageUrl = ""
+                    imageUrl = "https://www.justspices.es/media/recipe/brownie-chocolate.jpg"
                 )
             )
             productDao.insertProducts(sampleProducts)
