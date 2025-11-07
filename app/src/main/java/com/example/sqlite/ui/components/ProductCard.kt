@@ -20,16 +20,14 @@ import kotlinx.coroutines.delay
 @Composable
 fun ProductCard(
     product: Product,
-    onAddToCart: () -> Unit,
-    modifier: Modifier = Modifier
+    onAddToCart: () -> Unit
 ) {
     var isPressed by remember { mutableStateOf(false) }
     val scale by animateFloatAsState(
-        targetValue = if (isPressed) 0.95f else 1f,
+        targetValue = if (isPressed) 0.97f else 1f,
         animationSpec = spring(dampingRatio = Spring.DampingRatioMediumBouncy)
     )
 
-    // Resetear animación automáticamente
     LaunchedEffect(isPressed) {
         if (isPressed) {
             delay(200)
@@ -38,69 +36,69 @@ fun ProductCard(
     }
 
     Card(
-        modifier = modifier
+        modifier = Modifier
             .fillMaxWidth()
             .scale(scale),
-        elevation = CardDefaults.cardElevation(defaultElevation = 4.dp),
+        elevation = CardDefaults.cardElevation(defaultElevation = 6.dp),
         colors = CardDefaults.cardColors(
             containerColor = MaterialTheme.colorScheme.surface
-        )
+        ),
+        shape = RoundedCornerShape(16.dp)
     ) {
-        Row(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(16.dp),
-            horizontalArrangement = Arrangement.spacedBy(12.dp)
+        Column(
+            modifier = Modifier.fillMaxWidth()
         ) {
-            // ✅ Imagen del producto
+            // Imagen del producto
             AsyncImage(
                 model = product.imageUrl.ifEmpty {
-                    "https://via.placeholder.com/150/FFB6C1/FFFFFF?text=🍰"
+                    "https://via.placeholder.com/400x250/FFE4E8/8B5A3C?text=🍰"
                 },
                 contentDescription = product.name,
                 modifier = Modifier
-                    .size(100.dp)
-                    .clip(RoundedCornerShape(8.dp)),
+                    .fillMaxWidth()
+                    .height(200.dp),
                 contentScale = ContentScale.Crop
             )
 
             // Información del producto
             Column(
-                modifier = Modifier
-                    .weight(1f)
-                    .align(Alignment.CenterVertically)
+                modifier = Modifier.padding(16.dp)
             ) {
-                // Nombre del producto
+                // Categoría
+                Surface(
+                    color = MaterialTheme.colorScheme.primaryContainer,
+                    shape = RoundedCornerShape(8.dp)
+                ) {
+                    Text(
+                        text = product.category,
+                        style = MaterialTheme.typography.labelSmall,
+                        color = MaterialTheme.colorScheme.primary,
+                        modifier = Modifier.padding(horizontal = 12.dp, vertical = 4.dp),
+                        fontWeight = FontWeight.Medium
+                    )
+                }
+
+                Spacer(modifier = Modifier.height(8.dp))
+
+                // Nombre
                 Text(
                     text = product.name,
-                    style = MaterialTheme.typography.titleMedium,
-                    color = MaterialTheme.colorScheme.onSurface,
-                    maxLines = 1,
-                    overflow = TextOverflow.Ellipsis,
-                    fontWeight = FontWeight.SemiBold
+                    style = MaterialTheme.typography.titleLarge,
+                    fontWeight = FontWeight.Bold,
+                    color = MaterialTheme.colorScheme.onSurface
                 )
 
-                Spacer(modifier = Modifier.height(2.dp))
-
-                // Categoría
-                Text(
-                    text = product.category,
-                    style = MaterialTheme.typography.labelSmall,
-                    color = MaterialTheme.colorScheme.primary
-                )
-
-                Spacer(modifier = Modifier.height(4.dp))
+                Spacer(modifier = Modifier.height(8.dp))
 
                 // Descripción
                 Text(
                     text = product.description,
-                    style = MaterialTheme.typography.bodySmall,
+                    style = MaterialTheme.typography.bodyMedium,
                     color = MaterialTheme.colorScheme.onSurfaceVariant,
-                    maxLines = 2,
-                    overflow = TextOverflow.Ellipsis
+                    maxLines = 2
                 )
 
-                Spacer(modifier = Modifier.height(8.dp))
+                Spacer(modifier = Modifier.height(16.dp))
 
                 // Precio y botón
                 Row(
@@ -108,41 +106,28 @@ fun ProductCard(
                     horizontalArrangement = Arrangement.SpaceBetween,
                     verticalAlignment = Alignment.CenterVertically
                 ) {
-                    Column {
-                        Text(
-                            text = "$${String.format("%,.0f", product.price)}",
-                            style = MaterialTheme.typography.titleSmall,
-                            color = MaterialTheme.colorScheme.primary,
-                            fontWeight = FontWeight.Bold
-                        )
-                        if (product.stock > 0) {
-                            Text(
-                                text = "Stock: ${product.stock}",
-                                style = MaterialTheme.typography.labelSmall,
-                                color = MaterialTheme.colorScheme.onSurfaceVariant
-                            )
-                        } else {
-                            Text(
-                                text = "Agotado",
-                                style = MaterialTheme.typography.labelSmall,
-                                color = MaterialTheme.colorScheme.error
-                            )
-                        }
-                    }
+                    Text(
+                        text = "$${String.format("%,.0f", product.price)} CLP",
+                        style = MaterialTheme.typography.headlineSmall,
+                        color = MaterialTheme.colorScheme.primary,
+                        fontWeight = FontWeight.Bold
+                    )
 
-                    // Botón agregar con animación
                     Button(
                         onClick = {
                             isPressed = true
                             onAddToCart()
                         },
-                        enabled = product.available && product.stock > 0,
-                        modifier = Modifier.height(36.dp),
-                        contentPadding = PaddingValues(horizontal = 16.dp)
+                        colors = ButtonDefaults.buttonColors(
+                            containerColor = MaterialTheme.colorScheme.primary,
+                            contentColor = MaterialTheme.colorScheme.onPrimary
+                        ),
+                        shape = RoundedCornerShape(12.dp),
+                        elevation = ButtonDefaults.buttonElevation(defaultElevation = 4.dp)
                     ) {
                         Text(
-                            text = "Agregar",
-                            style = MaterialTheme.typography.labelMedium
+                            "Agregar al carrito",
+                            fontWeight = FontWeight.SemiBold
                         )
                     }
                 }

@@ -8,7 +8,6 @@ interface CartDao {
     @Query("SELECT * FROM cart_items WHERE userId = :userId")
     fun getCartItems(userId: Int): Flow<List<CartItem>>
 
-    // ✅ Nuevo: Obtener items del carrito con información del producto (para calcular total)
     @Transaction
     @Query("SELECT * FROM cart_items WHERE userId = :userId")
     fun getCartItemsWithProducts(userId: Int): Flow<List<CartWithProductDetails>>
@@ -30,4 +29,8 @@ interface CartDao {
 
     @Query("SELECT SUM(quantity) FROM cart_items WHERE userId = :userId")
     fun getCartItemCount(userId: Int): Flow<Int?>
+
+    //Conteo por userId
+    @Query("SELECT COALESCE(SUM(quantity), 0) FROM cart_items WHERE userId = :userId")
+    fun getTotalCartItemCount(userId: Int): Flow<Int>
 }

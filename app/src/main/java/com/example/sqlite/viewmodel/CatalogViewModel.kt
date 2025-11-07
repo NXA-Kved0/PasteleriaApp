@@ -2,7 +2,6 @@ package com.example.sqlite.viewmodel
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.sqlite.data.local.Product
 import com.example.sqlite.data.repository.CartRepository
 import com.example.sqlite.data.repository.ProductRepository
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -13,7 +12,8 @@ import kotlinx.coroutines.launch
 
 class CatalogViewModel(
     private val productRepository: ProductRepository,
-    private val cartRepository: CartRepository
+    private val cartRepository: CartRepository,
+    private val userId: Int
 ) : ViewModel() {
 
     val products = productRepository.allProducts.stateIn(
@@ -28,7 +28,24 @@ class CatalogViewModel(
     private val _addToCartState = MutableStateFlow<AddToCartState>(AddToCartState.Idle)
     val addToCartState: StateFlow<AddToCartState> = _addToCartState
 
-    fun addToCart(userId: Int, productId: Int) {
+    private val _cartItemCount = MutableStateFlow(0)
+    val cartItemCount: StateFlow<Int> = _cartItemCount
+
+    init {
+        loadCartItemCount()
+    }
+
+    //Usa userId
+    private fun loadCartItemCount() {
+        viewModelScope.launch {
+            cartRepository.getTotalCartItemCount(userId).collect { count ->
+                _cartItemCount.value = count
+            }
+        }
+    }
+
+    //no necesita userId como parámetro
+    fun addToCart(productId: Int) {
         viewModelScope.launch {
             _addToCartState.value = AddToCartState.Loading
             try {

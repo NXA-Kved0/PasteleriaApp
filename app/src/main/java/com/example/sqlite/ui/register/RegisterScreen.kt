@@ -22,7 +22,7 @@ fun RegisterScreen(
     var email by remember { mutableStateOf("") }
     var password by remember { mutableStateOf("") }
     var confirmPassword by remember { mutableStateOf("") }
-    var age by remember { mutableStateOf("") } // ✅ Agregado
+    var age by remember { mutableStateOf("") }
     val registerState by viewModel.registerState.collectAsState()
 
     LaunchedEffect(registerState) {
@@ -65,7 +65,6 @@ fun RegisterScreen(
 
         Spacer(modifier = Modifier.height(16.dp))
 
-        // ✅ Campo de edad agregado
         OutlinedTextField(
             value = age,
             onValueChange = { age = it },

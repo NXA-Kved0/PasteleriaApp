@@ -17,6 +17,7 @@ import com.example.sqlite.ui.cart.CartScreen
 import com.example.sqlite.ui.catalog.CatalogScreen
 import com.example.sqlite.ui.login.LoginScreen
 import com.example.sqlite.ui.register.RegisterScreen
+import com.example.sqlite.ui.splash.SplashScreen
 import com.example.sqlite.viewmodel.*
 
 @OptIn(ExperimentalAnimationApi::class)
@@ -34,7 +35,7 @@ fun AppNavigation(
 
     NavHost(
         navController = navController,
-        startDestination = Screen.Login.route,
+        startDestination = Screen.Splash.route,
         enterTransition = {
             slideInHorizontally(
                 initialOffsetX = { 1000 },
@@ -60,6 +61,16 @@ fun AppNavigation(
             ) + fadeOut(animationSpec = tween(400))
         }
     ) {
+        composable(Screen.Splash.route) {
+            SplashScreen(
+                onNavigateToLogin = {
+                    navController.navigate(Screen.Login.route) {
+                        popUpTo(Screen.Splash.route) { inclusive = true }
+                    }
+                }
+            )
+        }
+
         composable(Screen.Login.route) {
             val loginViewModel: LoginViewModel = viewModel(
                 factory = LoginViewModelFactory(userRepository)
@@ -99,7 +110,7 @@ fun AppNavigation(
 
         composable(Screen.Catalog.route) {
             val catalogViewModel: CatalogViewModel = viewModel(
-                factory = CatalogViewModelFactory(productRepository, cartRepository)
+                factory = CatalogViewModelFactory(productRepository, cartRepository, currentUserId)
             )
 
             CatalogScreen(
@@ -143,6 +154,7 @@ fun AppNavigation(
 }
 
 sealed class Screen(val route: String) {
+    object Splash : Screen("splash")
     object Login : Screen("login")
     object Register : Screen("register")
     object Catalog : Screen("catalog")

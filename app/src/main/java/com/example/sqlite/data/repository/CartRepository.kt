@@ -19,6 +19,11 @@ class CartRepository(private val cartDao: CartDao) {
         return cartDao.getCartItemCount(userId)
     }
 
+    //Conteo por userId
+    fun getTotalCartItemCount(userId: Int): Flow<Int> {
+        return cartDao.getTotalCartItemCount(userId)
+    }
+
     suspend fun addToCart(userId: Int, productId: Int) {
         val existingItem = cartDao.getCartItem(userId, productId)
         if (existingItem != null) {

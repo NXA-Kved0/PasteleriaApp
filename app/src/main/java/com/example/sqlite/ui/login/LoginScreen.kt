@@ -1,14 +1,18 @@
 package com.example.sqlite.ui.login
 
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.unit.dp
+import com.example.sqlite.R
 import com.example.sqlite.viewmodel.LoginState
 import com.example.sqlite.viewmodel.LoginViewModel
 
@@ -36,11 +40,31 @@ fun LoginScreen(
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Center
     ) {
-        Text(
-            text = "🍰 Mil Sabores",
-            style = MaterialTheme.typography.headlineLarge,
-            modifier = Modifier.padding(bottom = 32.dp)
+        // ✅ Logo del cupcake
+        Image(
+            painter = painterResource(id = R.drawable.logo_cupcake),
+            contentDescription = "Logo Mil Sabores",
+            modifier = Modifier.size(100.dp)
         )
+
+        Spacer(modifier = Modifier.height(16.dp))
+
+        Text(
+            text = "Mil Sabores",
+            style = MaterialTheme.typography.headlineMedium,
+            fontWeight = FontWeight.Bold,
+            color = MaterialTheme.colorScheme.primary
+        )
+
+        Spacer(modifier = Modifier.height(8.dp))
+
+        Text(
+            text = "Pastelería Artesanal",
+            style = MaterialTheme.typography.bodyLarge,
+            color = MaterialTheme.colorScheme.onSurfaceVariant
+        )
+
+        Spacer(modifier = Modifier.height(32.dp))
 
         OutlinedTextField(
             value = email,
