@@ -1,5 +1,6 @@
 package com.example.sqlite.data.local
 
+import com.example.sqlite.data.local.Product
 import androidx.room.*
 import kotlinx.coroutines.flow.Flow
 
@@ -9,7 +10,7 @@ interface ProductDao {
     fun getAllProducts(): Flow<List<Product>>
 
     @Query("SELECT * FROM products WHERE id = :productId")
-    suspend fun getProductById(productId: Int): Product?
+    fun getProductById(productId: Int): Product?
 
     @Query("SELECT * FROM products WHERE category = :category AND available = 1")
     fun getProductsByCategory(category: String): Flow<List<Product>>

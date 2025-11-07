@@ -22,6 +22,7 @@ fun RegisterScreen(
     var email by remember { mutableStateOf("") }
     var password by remember { mutableStateOf("") }
     var confirmPassword by remember { mutableStateOf("") }
+    var age by remember { mutableStateOf("") } // ✅ Agregado
     val registerState by viewModel.registerState.collectAsState()
 
     LaunchedEffect(registerState) {
@@ -64,6 +65,18 @@ fun RegisterScreen(
 
         Spacer(modifier = Modifier.height(16.dp))
 
+        // ✅ Campo de edad agregado
+        OutlinedTextField(
+            value = age,
+            onValueChange = { age = it },
+            label = { Text("Edad") },
+            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
+            modifier = Modifier.fillMaxWidth(),
+            singleLine = true
+        )
+
+        Spacer(modifier = Modifier.height(16.dp))
+
         OutlinedTextField(
             value = password,
             onValueChange = { password = it },
@@ -93,9 +106,10 @@ fun RegisterScreen(
                 when {
                     name.isBlank() -> {}
                     email.isBlank() -> {}
+                    age.isBlank() -> {} // ✅ Validación de edad
                     password.isBlank() -> {}
                     password != confirmPassword -> {}
-                    else -> viewModel.register(email, password, name)
+                    else -> viewModel.register(email, password, name, age.toIntOrNull() ?: 0) // ✅ Pasando edad
                 }
             },
             modifier = Modifier.fillMaxWidth(),

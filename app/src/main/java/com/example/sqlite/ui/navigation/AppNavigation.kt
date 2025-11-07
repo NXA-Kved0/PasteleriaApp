@@ -16,6 +16,7 @@ import com.example.sqlite.ui.login.LoginScreen
 import com.example.sqlite.ui.register.RegisterScreen
 import com.example.sqlite.viewmodel.*
 
+
 @Composable
 fun AppNavigation(
     database: AppDatabase

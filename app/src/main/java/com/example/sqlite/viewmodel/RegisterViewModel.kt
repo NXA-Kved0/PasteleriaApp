@@ -13,7 +13,7 @@ class RegisterViewModel(private val userRepository: UserRepository) : ViewModel(
     private val _registerState = MutableStateFlow<RegisterState>(RegisterState.Idle)
     val registerState: StateFlow<RegisterState> = _registerState
 
-    fun register(email: String, password: String, name: String) {
+    fun register(email: String, password: String, name: String, age: Int) {
         viewModelScope.launch {
             _registerState.value = RegisterState.Loading
             try {
@@ -24,8 +24,8 @@ class RegisterViewModel(private val userRepository: UserRepository) : ViewModel(
                     return@launch
                 }
 
-                // Crear nuevo usuario
-                val newUser = User(email = email, password = password, name = name)
+                // Crear nuevo usuario con edad
+                val newUser = User(email = email, password = password, name = name, age = age)
                 userRepository.insert(newUser)
                 _registerState.value = RegisterState.Success
             } catch (e: Exception) {

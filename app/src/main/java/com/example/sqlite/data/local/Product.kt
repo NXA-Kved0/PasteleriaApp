@@ -3,7 +3,7 @@ package com.example.sqlite.data.local
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 
-@Entity(tablename = "products")
+@Entity(tableName = "products")
 data class Product(
     @PrimaryKey(autoGenerate = true)
     val id: Int = 0,
@@ -13,5 +13,5 @@ data class Product(
     val imageUrl: String = "",
     val category: String = "Pasteles",
     val stock: Int = 0,
-    val avaible: Boolean = true
+    val available: Boolean = true
 )
