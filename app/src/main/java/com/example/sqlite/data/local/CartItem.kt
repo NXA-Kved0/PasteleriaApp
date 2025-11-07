@@ -1,8 +1,11 @@
 package com.example.sqlite.data.local
+
+import androidx.room.Embedded
 import androidx.room.Entity
-import androidx.room.PrimaryKey
 import androidx.room.ForeignKey
 import androidx.room.Index
+import androidx.room.PrimaryKey
+import androidx.room.Relation
 
 @Entity(
     tableName = "cart_items",
@@ -29,4 +32,13 @@ data class CartItem(
     val productId: Int,
     val quantity: Int = 1,
     val addedAt: Long = System.currentTimeMillis()
+)
+
+data class CartWithProductDetails(
+    @Embedded val cartItem: CartItem,
+    @Relation(
+        parentColumn = "productId",
+        entityColumn = "id"
+    )
+    val product: Product
 )

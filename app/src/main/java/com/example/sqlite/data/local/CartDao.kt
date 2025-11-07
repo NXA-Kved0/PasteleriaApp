@@ -8,6 +8,11 @@ interface CartDao {
     @Query("SELECT * FROM cart_items WHERE userId = :userId")
     fun getCartItems(userId: Int): Flow<List<CartItem>>
 
+    // ✅ Nuevo: Obtener items del carrito con información del producto (para calcular total)
+    @Transaction
+    @Query("SELECT * FROM cart_items WHERE userId = :userId")
+    fun getCartItemsWithProducts(userId: Int): Flow<List<CartWithProductDetails>>
+
     @Query("SELECT * FROM cart_items WHERE userId = :userId AND productId = :productId LIMIT 1")
     suspend fun getCartItem(userId: Int, productId: Int): CartItem?
 

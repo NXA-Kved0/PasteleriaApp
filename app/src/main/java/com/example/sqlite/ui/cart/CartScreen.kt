@@ -11,7 +11,7 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import com.example.sqlite.data.local.CartItem
+import com.example.sqlite.data.local.CartWithProductDetails
 import com.example.sqlite.viewmodel.CartViewModel
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -20,7 +20,8 @@ fun CartScreen(
     viewModel: CartViewModel,
     onNavigateBack: () -> Unit
 ) {
-    val cartItems by viewModel.cartItems.collectAsState()
+    val cartItemsWithProducts by viewModel.cartItemsWithProducts.collectAsState()
+    val totalPrice by viewModel.totalPrice.collectAsState()
 
     Scaffold(
         topBar = {
@@ -35,7 +36,7 @@ fun CartScreen(
         }
     ) { padding ->
         Column(modifier = Modifier.padding(padding)) {
-            if (cartItems.isEmpty()) {
+            if (cartItemsWithProducts.isEmpty()) {
                 Box(
                     modifier = Modifier.fillMaxSize(),
                     contentAlignment = Alignment.Center
@@ -48,18 +49,18 @@ fun CartScreen(
                     verticalArrangement = Arrangement.spacedBy(12.dp),
                     modifier = Modifier.weight(1f)
                 ) {
-                    items(cartItems) { cartItem ->
+                    items(cartItemsWithProducts) { item ->
                         CartItemCard(
-                            cartItem = cartItem,
+                            item = item,
                             onUpdateQuantity = { newQuantity ->
-                                viewModel.updateQuantity(cartItem, newQuantity)
+                                viewModel.updateQuantity(item.cartItem, newQuantity)
                             },
-                            onRemove = { viewModel.removeFromCart(cartItem) }
+                            onRemove = { viewModel.removeFromCart(item.cartItem) }
                         )
                     }
                 }
 
-                Divider()
+                HorizontalDivider()
 
                 Row(
                     modifier = Modifier
@@ -69,7 +70,7 @@ fun CartScreen(
                     verticalAlignment = Alignment.CenterVertically
                 ) {
                     Text(
-                        text = "Total: $0",
+                        text = "Total: $${"%.2f".format(totalPrice)}",
                         style = MaterialTheme.typography.titleLarge
                     )
                     Button(onClick = { /* Finalizar compra */ }) {
@@ -83,7 +84,7 @@ fun CartScreen(
 
 @Composable
 fun CartItemCard(
-    cartItem: CartItem,
+    item: CartWithProductDetails,
     onUpdateQuantity: (Int) -> Unit,
     onRemove: () -> Unit
 ) {
@@ -100,13 +101,17 @@ fun CartItemCard(
         ) {
             Column(modifier = Modifier.weight(1f)) {
                 Text(
-                    text = "Producto #${cartItem.productId}",
+                    text = item.product.name,
                     style = MaterialTheme.typography.titleMedium
                 )
                 Spacer(modifier = Modifier.height(4.dp))
                 Text(
-                    text = "Cantidad: ${cartItem.quantity}",
+                    text = "Precio: $${"%.2f".format(item.product.price)}",
                     style = MaterialTheme.typography.bodyMedium
+                )
+                Text(
+                    text = "Subtotal: $${"%.2f".format(item.cartItem.quantity * item.product.price)}",
+                    style = MaterialTheme.typography.bodySmall
                 )
             }
 
@@ -115,18 +120,18 @@ fun CartItemCard(
                 horizontalArrangement = Arrangement.spacedBy(8.dp)
             ) {
                 IconButton(
-                    onClick = { onUpdateQuantity(cartItem.quantity - 1) }
+                    onClick = { onUpdateQuantity(item.cartItem.quantity - 1) }
                 ) {
                     Text("-", style = MaterialTheme.typography.titleLarge)
                 }
 
                 Text(
-                    text = "${cartItem.quantity}",
+                    text = "${item.cartItem.quantity}",
                     style = MaterialTheme.typography.titleMedium
                 )
 
                 IconButton(
-                    onClick = { onUpdateQuantity(cartItem.quantity + 1) }
+                    onClick = { onUpdateQuantity(item.cartItem.quantity + 1) }
                 ) {
                     Text("+", style = MaterialTheme.typography.titleLarge)
                 }
