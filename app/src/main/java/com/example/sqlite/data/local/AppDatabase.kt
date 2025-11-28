@@ -34,7 +34,8 @@ abstract class AppDatabase : RoomDatabase() {
                     AppDatabase::class.java,
                     "pasteleria_database"
                 )
-                    .addCallback(DatabaseCallback())
+                    //No deja que muestre los productos del Backend
+                    //.addCallback(DatabaseCallback())
                     .fallbackToDestructiveMigration()
                     .build()
                 INSTANCE = instance

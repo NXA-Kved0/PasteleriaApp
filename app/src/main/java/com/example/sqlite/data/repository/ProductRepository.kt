@@ -36,13 +36,14 @@ class ProductRepository(private val productDao: ProductDao) {
             try {
                 // Llama a la API definida en RetrofitInstance
                 val remoteList = RetrofitInstance.api.getRemoteProducts()
+                println("REMOTE LIST SIZE:${remoteList.size}")
 
                 // Mapear RemoteProduct -> Product (ajusta según tu entity)
                 val mapped = remoteList.map { remote ->
                     Product(
                         id = 0,                       // Room autogenera
-                        name = remote.title,
-                        description = remote.body,
+                        name = remote.name,
+                        description = remote.description,
                         price = 10000.0,
                         imageUrl = "",
                         category = "API",
@@ -56,6 +57,7 @@ class ProductRepository(private val productDao: ProductDao) {
                 productDao.insertProducts(mapped)
 
             } catch (e: Exception) {
+                println("REMOTE ERROR: ${e.message}")
                 // ignorar o loguear para la demo
             }
         }

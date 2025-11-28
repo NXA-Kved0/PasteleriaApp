@@ -32,6 +32,9 @@ class CatalogViewModel(
     val cartItemCount: StateFlow<Int> = _cartItemCount
 
     init {
+        //Sincroniza Los productos desde el backend
+        syncFromApi()
+        //Carga el conteo del carrito
         loadCartItemCount()
     }
 
@@ -65,13 +68,15 @@ class CatalogViewModel(
         _addToCartState.value = AddToCartState.Idle
     }
 
-    //Agregado
-    init {
-        syncFromApi()
-    }
     private fun syncFromApi() {
         viewModelScope.launch {
-            productRepository.syncProductsFromApi()
+            try {
+                println("SYNC API: iniciando llamada")   // Log simple
+                productRepository.syncProductsFromApi()
+                println("SYNC API: terminada OK")
+            } catch (e: Exception) {
+                println("SYNC API ERROR: ${e.message}")
+            }
         }
     }
 }
