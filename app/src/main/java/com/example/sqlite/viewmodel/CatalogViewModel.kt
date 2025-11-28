@@ -64,6 +64,16 @@ class CatalogViewModel(
     fun resetAddToCartState() {
         _addToCartState.value = AddToCartState.Idle
     }
+
+    //Agregado
+    init {
+        syncFromApi()
+    }
+    private fun syncFromApi() {
+        viewModelScope.launch {
+            productRepository.syncProductsFromApi()
+        }
+    }
 }
 
 sealed class AddToCartState {
