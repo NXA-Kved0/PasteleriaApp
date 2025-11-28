@@ -1,5 +1,6 @@
 package com.example.sqlite.data.repository
 
+import com.example.sqlite.data.remote.RemoteProduct
 import com.example.sqlite.data.local.Product
 import com.example.sqlite.data.local.ProductDao
 import com.example.sqlite.data.remote.RetrofitInstance
@@ -38,15 +39,14 @@ class ProductRepository(private val productDao: ProductDao) {
                 val remoteList = RetrofitInstance.api.getRemoteProducts()
                 println("REMOTE LIST SIZE:${remoteList.size}")
 
-                // Mapear RemoteProduct -> Product (ajusta según tu entity)
                 val mapped = remoteList.map { remote ->
                     Product(
                         id = 0,                       // Room autogenera
                         name = remote.name,
                         description = remote.description,
-                        price = 10000.0,
-                        imageUrl = "",
-                        category = "API",
+                        price = remote.price,
+                        imageUrl = remote.imageUrl,
+                        category = remote.category,
                         stock = 10,
                         available = true
                     )
