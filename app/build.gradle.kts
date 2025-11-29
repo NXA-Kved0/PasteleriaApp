@@ -20,6 +20,22 @@ android {
         vectorDrawables.useSupportLibrary = true
     }
 
+    //CONFIGURACIÓN DE FIRMA
+    signingConfigs {
+        create("release") {
+            // Leer las propiedades; si falta la ruta, no configurar nada
+            val storePath = project.findProperty("RELEASE_STORE_FILE") as String? ?: return@create
+            val storePass = project.findProperty("RELEASE_STORE_PASSWORD") as String? ?: ""
+            val keyAliasProp = project.findProperty("RELEASE_KEY_ALIAS") as String? ?: ""
+            val keyPass = project.findProperty("RELEASE_KEY_PASSWORD") as String? ?: ""
+
+            storeFile = file(storePath)
+            storePassword = storePass
+            keyAlias = keyAliasProp
+            keyPassword = keyPass
+        }
+    }
+
     buildTypes {
         release {
             isMinifyEnabled = false
@@ -27,8 +43,15 @@ android {
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"
             )
+
+            //Usa la firma release
+            signingConfig = signingConfigs.getByName("release")
+        }
+        debug {
+            // firma debug por defecto
         }
     }
+
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_21
         targetCompatibility = JavaVersion.VERSION_21

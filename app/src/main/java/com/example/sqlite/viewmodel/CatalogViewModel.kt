@@ -68,6 +68,10 @@ class CatalogViewModel(
         _addToCartState.value = AddToCartState.Idle
     }
 
+    fun refresh(){
+        syncFromApi()
+    }
+
     private fun syncFromApi() {
         viewModelScope.launch {
             try {

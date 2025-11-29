@@ -31,6 +31,7 @@ import com.example.sqlite.viewmodel.AddToCartState
 import com.example.sqlite.viewmodel.CatalogViewModel
 import kotlinx.coroutines.delay
 
+
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun CatalogScreen(
@@ -116,6 +117,9 @@ fun CatalogScreen(
                     titleContentColor = MaterialTheme.colorScheme.onPrimaryContainer
                 ),
                 actions = {
+                    IconButton(onClick = {viewModel.refresh()}) {
+                        Text("⟳", style = MaterialTheme.typography.headlineSmall)
+                    }
                     //Switch de Dark Mode
                     TextButton(onClick = { ThemeManager.toggleTheme() }) {
                         Text(

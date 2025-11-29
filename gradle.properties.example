@@ -1,0 +1,7 @@
+# Ejemplo de configuración para firma de release.
+# Copiar este archivo como gradle.properties y rellenar con datos reales EN LA MÁQUINA LOCAL.
+
+RELEASE_STORE_FILE=C:/Users/TU_USUARIO/keys/mil_sabores.jks
+RELEASE_STORE_PASSWORD=CAMBIAR_POR_PASSWORD
+RELEASE_KEY_ALIAS=release
+RELEASE_KEY_PASSWORD=CAMBIAR_POR_PASSWORD
