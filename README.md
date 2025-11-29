@@ -1,5 +1,9 @@
 # Mil Sabores - App Android (Kotlin + Jetpack Compose)
 
+Integrantes:
+-Joshua Martinez
+-Ignacia Cavedo
+
 Aplicación móvil para una pastelería llamada **Mil Sabores**, desarrollada en Kotlin con **Jetpack Compose**, **Room**, **Retrofit** y arquitectura basada en ViewModel/Repository. La app consume un backend REST desplegado en AWS (Spring Boot + Swagger) para obtener el catálogo de productos.
 
 ## Funcionalidades principales
@@ -91,3 +95,8 @@ Ajustar BASE_URL en RetrofitInstance si la IP de AWS cambia.
 Ejecutar la app en un emulador o dispositivo físico.
 
 Verificar que el backend esté corriendo en AWS en el puerto 9090.
+
+## 📚 Licencia
+
+Proyecto académico desarrollado como parte de la asignatura **“Desarrollo de Aplicaciones Móviles / Consumo de API REST y Microservicios”**.  
+Uso educativo y demostrativo.
