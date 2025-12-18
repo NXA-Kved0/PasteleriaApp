@@ -15,6 +15,6 @@ data class RemoteProduct(
 
 //Interfaz api
 interface ApiService {
-    @GET("/products")
+    @GET("/api/products")
     suspend fun getRemoteProducts(): List<RemoteProduct>
 }
