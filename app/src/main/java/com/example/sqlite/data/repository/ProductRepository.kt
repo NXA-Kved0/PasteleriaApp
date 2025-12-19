@@ -1,6 +1,5 @@
 package com.example.sqlite.data.repository
 
-import com.example.sqlite.data.remote.RemoteProduct
 import com.example.sqlite.data.local.Product
 import com.example.sqlite.data.local.ProductDao
 import com.example.sqlite.data.remote.RetrofitInstance

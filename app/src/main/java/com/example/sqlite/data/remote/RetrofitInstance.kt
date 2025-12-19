@@ -4,8 +4,8 @@ import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
 object RetrofitInstance {
-    //MIMO BACKEND DE LA PAGINA WEB
-    private const val BASE_URL = "http://3.209.12.30:9090/"
+    //MISMO BACKEND DE LA PAGINA WEB
+    private const val BASE_URL = "http://10.0.2.2:9090/"
 
     val api: ApiService by lazy {
         Retrofit.Builder()

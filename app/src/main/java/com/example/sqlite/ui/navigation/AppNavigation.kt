@@ -20,6 +20,17 @@ import com.example.sqlite.ui.register.RegisterScreen
 import com.example.sqlite.ui.splash.SplashScreen
 import com.example.sqlite.viewmodel.*
 
+//Define las rutas
+sealed class Screen(val route: String) {
+    object Splash : Screen("splash")
+    object Login : Screen("login")
+    object Register : Screen("register")
+    object Catalog : Screen("catalog")
+    object Cart : Screen("cart")
+    object Camera : Screen("camera")
+}
+
+//Define la navegación
 @OptIn(ExperimentalAnimationApi::class)
 @Composable
 fun AppNavigation(
@@ -151,13 +162,4 @@ fun AppNavigation(
             )
         }
     }
-}
-
-sealed class Screen(val route: String) {
-    object Splash : Screen("splash")
-    object Login : Screen("login")
-    object Register : Screen("register")
-    object Catalog : Screen("catalog")
-    object Cart : Screen("cart")
-    object Camera : Screen("camera")
 }

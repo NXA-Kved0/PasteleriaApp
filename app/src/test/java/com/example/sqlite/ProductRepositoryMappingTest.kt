@@ -11,17 +11,20 @@ class ProductRepositoryMappingTest {
     fun `remote product is mapped correctly to local Product`() {
         val remote = RemoteProduct(
             id = 1,
-            title = "Torta de chocolate",
-            body = "Bizcocho húmedo con cobertura"
+            name = "Torta de chocolate",
+            description = "Bizcocho húmedo con cobertura",
+            price = 10000.0,
+            category = "API",
+            imageUrl = ""
         )
 
         val mapped = Product(
             id = 0,
-            name = remote.title,
-            description = remote.body,
-            price = 10000.0,
-            imageUrl = "",
-            category = "API",
+            name = remote.name,
+            description = remote.description,
+            price = remote.price,
+            imageUrl = remote.imageUrl,
+            category = remote.category,
             stock = 10,
             available = true
         )
